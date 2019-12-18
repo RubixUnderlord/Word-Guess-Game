@@ -3,6 +3,14 @@ $(document).ready(function () {
     var letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
     var wordLength = [];
 
+    function restart(){
+        var restartBtn = $("<button>");
+        restartBtn.addClass("col");
+        restartBtn.text("Restart");
+        restartBtn.attr('id', 'start');
+        $("#restart").append(restartBtn);
+        $("#hide").removeAttr('id', 'hide');
+    }
 
     $("#start").click(function () {
         var life = 13;
@@ -17,13 +25,13 @@ $(document).ready(function () {
 
         for (var i = 0; i < letters.length; i++) {
             var letterBtn = $("<button>");
-            letterBtn.addClass("col-md-1");
-            letterBtn.addClass("visible");
+            letterBtn.addClass("col-md-1 visible");
             letterBtn.attr("data-letter", letters[i]);
             letterBtn.text(`${letters[i]}`);
             letterBtn.click(function () {
                 var chosenLetter = $(this).attr("data-letter");
                 $(this).addClass("hide");
+                $(this).off();
                 console.log(chosenLetter);
                 console.log(life);
                 var wordPreGuess = wordLength;
@@ -39,11 +47,13 @@ $(document).ready(function () {
                 }
                 if (life === parseInt(0)) {
                     $("#remainingWord").text("You Lose");
-                    $(".visible").addClass("hide");
+                    $(".visible").addClass("disappear");
+                    restart();
                 } else if (chosenWord === wordLength.join("")) {
                     $("#remainingWord").text(`You Win`);
-                    $(".visible").addClass("hide");
-                } else{
+                    $(".visible").addClass("disappear");
+                    restart();
+                } else {
                 }
 
             });
