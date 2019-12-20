@@ -2,34 +2,59 @@ $(document).ready(function () {
     var wins = 0
     var loses = 0
     var life = 13;
+    var chosenWord = "";
     var wordBank = ["ABRUBPTLY", "FUSHCIA", "HAPHAZARD", "QUARTZ", "LYMPH"];
     $("#start").on("click", function () {
+        randomWord()
         start()
     });
-    
-    var restartBtn = $("<button>");
-        restartBtn.addClass("col");
-        restartBtn.text("Restart");
-        restartBtn.attr('id', 'restart remove');
-        $("#restart").append(restartBtn);
-        $("#restart").on("click", function () {
-            $(this).attr('id', 'hide');
-            start()
-        });
+    $("#makeWord").on("click", function () {
+        makeWord()
+    });
+    $("#submit").on("click", function () {
+        var word = $("#word").val();
+        chosenWord = word.toUpperCase();
+        console.log(chosenWord);
+        start()
+    });
 
+
+    var restartBtn = $("<button>");
+    restartBtn.addClass("col");
+    restartBtn.text("Restart");
+    restartBtn.attr('id', 'restart remove');
+    $("#restart").append(restartBtn);
+    $("#restart").on("click", function () {
+        $(this).attr('id', 'hide');
+        start()
+    });
+
+    function randomWord() {
+        var randomIndex = Math.floor(Math.random() * wordBank.length);
+        chosenWord = wordBank[randomIndex];
+    }
+    function makeWord() {
+        $("#word").removeClass("hide");
+        $("#submit").removeClass("hide");
+    }
 
     function start() {
         life = 13
         console.log("something");
-        var randomIndex = Math.floor(Math.random() * wordBank.length);
-        var chosenWord = wordBank[randomIndex];
         $("#start").addClass("hide");
+        $("#makeWord").addClass("hide");
+        $("#word").addClass("hide");
+        $("#submit").addClass("hide");
         $(".game").removeClass("hide");
         $("#wins").text(`wins: ${wins}`);
         $("#loses").text(`loses: ${loses}`);
         var wordLength = [];
         for (var i = 0; i < chosenWord.length; i++) {
-            wordLength[i] = "_";
+            if(chosenWord[i] === " "){
+                wordLength[i] = "\xa0";
+            }else{
+                wordLength[i] = "_";
+            }
         }
 
 
